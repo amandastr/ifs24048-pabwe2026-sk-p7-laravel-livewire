@@ -1,0 +1,85 @@
+# ifs24048-pabwe2026-sk-p7-laravel-livewire
+
+Aplikasi **Stock Barang** (inventaris) dengan arsitektur **Feature-First**, dibangun menggunakan **Laravel 13**, **Livewire 4**, **MySQL/MariaDB**, **PhpSpreadsheet**, dan integrasi **OpenAI**. Studi kasus PABWE 2026 P7 (domain Todo pada latihan diganti menjadi Stock).
+
+## Peran & Fitur
+
+| Peran | Kemampuan |
+| --- | --- |
+| Guest | Login dan register. Rute `/` diarahkan ke login. |
+| Member | Mengelola stok miliknya sendiri saja (`/stocks`). |
+| Admin | Melihat daftar user + jumlah stok (`/admin/users`) dan stok tiap user secara **read-only** (`/admin/users/{user}/stocks`). |
+
+Fitur member:
+
+- Daftar stok dengan pencarian (nama, SKU, deskripsi), filter status, dan pagination.
+- CRUD stok lewat modal: nama, SKU, deskripsi Markdown (Toast UI), quantity, unit, price, min_stock.
+- **Adjust quantity (+/-)** dari list maupun detail. Status ikut menyesuaikan otomatis:
+  - `out_of_stock` jika quantity = 0
+  - `low_stock` jika quantity <= min_stock
+  - `available` jika quantity > min_stock
+- Detail stok (`/stocks/{stock}`): ubah data, cover image, deskripsi Markdown.
+- Import / export Excel (PhpSpreadsheet). Kolom: No, Name, SKU, Description, Qty, Unit, Price, Min Stock, Status. Saat import, status selalu dihitung ulang dari Qty dan Min Stock.
+- Generate item stok dengan AI, preview, pilih, lalu simpan.
+- Profil (data diri, password, foto).
+
+Keamanan: middleware `role` dan `owns.stock`, `StockPolicy`, rate limit `1000-per-second`, opsi `FORCE_HTTPS`.
+
+Form login memakai id `login-username`, `login-password`, `login-submit`.
+
+## Rute
+
+| Method | URI | Keterangan |
+| --- | --- | --- |
+| GET | `/` | Guest -> login, admin -> users, member -> stocks |
+| GET | `/login`, `/register` | Guest |
+| POST | `/logout` | Auth |
+| GET | `/stocks` | Daftar stok (member, `owns.stock`) |
+| GET | `/stocks/{stock}` | Detail stok |
+| GET | `/profile` | Profil |
+| GET | `/admin/users` | Admin |
+| GET | `/admin/users/{user}/stocks` | Admin, read-only |
+
+## Menjalankan
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+# buat database: pabwe_p7_stock, lalu sesuaikan DB_* (dan OPENAI_*) di .env
+php artisan migrate:fresh --seed
+php artisan storage:link
+npm install --ignore-scripts
+npm run build
+composer run dev
+```
+
+Akun seeder: `admin` / `admin` dan `member` / `member` (member memiliki 3 contoh stok).
+
+Variabel penting di `.env`: `DB_DATABASE=pabwe_p7_stock`, `FORCE_HTTPS`, `OPENAI_ENDPOINT`, `OPENAI_KEY`, `OPENAI_MODEL`.
+
+## Pengujian
+
+```bash
+composer test     # phpunit --coverage-text (target coverage app/ = 100%)
+composer audit    # harus bersih
+```
+
+Butuh ekstensi PHP `gd`, `zip`, `mbstring`, `pdo_sqlite` dan driver coverage (`pcov` atau `xdebug` dengan `xdebug.mode=coverage`). Artefak uji (`coverage-*`, `coverage.txt`, `junit.xml`, dll.) sudah diabaikan oleh `.gitignore`. Jangan commit `.env`.
+
+## Struktur
+
+```
+app/
+├── Features/
+│   ├── Admin/   (Livewire: AdminUserStockList, UserList | Services: AdminUserService)
+│   ├── Ai/      (Contracts: AiClientInterface | DTO: GeneratedStockItem | Services: OpenAiStockGeneratorService)
+│   ├── Auth/    (Actions: LoginUserAction, RegisterUserAction | Livewire: Login, Register)
+│   ├── Profile/ (Livewire: Profile | Services: ProfileService)
+│   └── Stock/   (Contracts, Enums, Livewire, Models, Policies, Repositories, Services)
+├── Http/Middleware/ (EnsureRole, EnsureStockOwnership)
+├── Models/User.php
+└── Providers/AppServiceProvider.php
+```
+
+CI: lihat `Jenkinsfile` (composer audit gagal jika ada kerentanan, coverage gagal jika kurang dari 100%).
