@@ -83,3 +83,12 @@ app/
 ```
 
 CI: lihat `Jenkinsfile` (composer audit gagal jika ada kerentanan, coverage gagal jika kurang dari 100%).
+
+## Deploy ke Vercel (container FrankenPHP)
+
+File yang dipakai: `vercel.json`, `Dockerfile.vercel`, `Caddyfile`, `.dockerignore`. Panduan resmi: https://vercel.com/kb/guide/laravel-php-with-docker
+
+1. Siapkan database MySQL/MariaDB yang bisa diakses dari internet, lalu jalankan migrasi dari komputer lokal: `php artisan migrate:fresh --seed --force` (dengan variabel `DB_*` mengarah ke database tersebut).
+2. Di Project Settings Vercel: Framework Preset = **Other**, kosongkan Build/Install/Output Command override.
+3. Isi Environment Variables: `APP_KEY` (dari `php artisan key:generate --show`), `APP_URL`, `DB_CONNECTION=mysql`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `MYSQL_ATTR_SSL_CA` (jika penyedia database mewajibkan TLS), `FORCE_HTTPS=true`, `SESSION_DRIVER=database`, `CACHE_STORE=database`, `QUEUE_CONNECTION=sync`, dan `OPENAI_KEY` (opsional).
+4. Redeploy. Catatan: sistem berkas container tidak permanen, sehingga foto profil dan cover yang diunggah tidak tersimpan permanen kecuali disk `public` dialihkan ke object storage.

@@ -13,6 +13,17 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_login_form_has_required_element_ids(): void
+    {
+        $this->get('/login')
+            ->assertOk()
+            ->assertSee('id="login-username"', false)
+            ->assertSee('id="login-password"', false)
+            ->assertSee('id="login-submit"', false)
+            ->assertSee('for="login-username"', false)
+            ->assertSee('for="login-password"', false);
+    }
+
     public function test_can_render_login_page(): void
     {
         $this->get('/login')

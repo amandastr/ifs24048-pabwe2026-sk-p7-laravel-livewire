@@ -1,0 +1,61 @@
+# Deploy Laravel (Livewire) ke Vercel memakai FrankenPHP.
+# Referensi: https://vercel.com/kb/guide/laravel-php-with-docker
+
+FROM dunglas/frankenphp:1-php8.4-bookworm AS base
+
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
+    && install-php-extensions intl zip gd exif pdo_mysql \
+    && { \
+        echo "upload_max_filesize=12M"; \
+        echo "post_max_size=14M"; \
+        echo "memory_limit=256M"; \
+    } > "$PHP_INI_DIR/conf.d/zz-app.ini"
+
+WORKDIR /app
+
+# ---- Dependensi Composer (tanpa dev) ----
+FROM base AS dependencies
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY composer.json composer.lock ./
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --no-progress \
+    --no-scripts \
+    --optimize-autoloader \
+    --prefer-dist
+
+COPY . .
+RUN mkdir -p \
+        storage/framework/cache \
+        storage/framework/sessions \
+        storage/framework/views \
+        bootstrap/cache \
+    && composer dump-autoload --no-dev --classmap-authoritative
+
+# ---- Image runtime ----
+FROM base AS runtime
+
+COPY --from=dependencies --chown=www-data:www-data /app /app
+COPY --chown=www-data:www-data Caddyfile /etc/frankenphp/Caddyfile
+
+RUN php artisan view:cache \
+    && php artisan storage:link \
+    && chown -R www-data:www-data storage bootstrap/cache public/storage \
+    && setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
+    && chown -R www-data:www-data /config/caddy /data/caddy
+
+# Nilai berikut dapat ditimpa lewat Environment Variables di Vercel.
+ENV PORT=80 \
+    APP_ENV=production \
+    APP_DEBUG=false \
+    LOG_CHANNEL=stderr \
+    FORCE_HTTPS=true \
+    SESSION_DRIVER=database \
+    CACHE_STORE=database \
+    QUEUE_CONNECTION=sync
+
+USER www-data
+
+CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]
