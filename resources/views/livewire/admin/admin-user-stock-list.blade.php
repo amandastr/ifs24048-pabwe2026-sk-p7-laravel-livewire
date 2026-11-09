@@ -66,7 +66,7 @@
                 <tbody class="divide-y divide-slate-100">
                     @forelse ($stocks as $index => $stock)
                         <tr class="hover:bg-slate-50/80 transition">
-                            <td class="py-4 px-6 text-slate-400 text-xs">
+                            <td class="py-4 px-6 text-slate-600 text-xs">
                                 {{ $stocks->firstItem() + $index }}
                             </td>
                             <td class="py-4 px-6 font-semibold text-slate-900">

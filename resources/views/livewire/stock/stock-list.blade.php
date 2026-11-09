@@ -31,7 +31,7 @@
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
                 class="absolute right-0 z-30 mt-2 w-56 origin-top-right rounded-xl border border-slate-200 bg-white py-1.5 shadow-xl shadow-slate-200/70">
-                <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">Aksi Cepat</div>
+                <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-600">Aksi Cepat</div>
 
                 <button type="button" :disabled="!!loading"
                     @click="
@@ -60,7 +60,7 @@
                 </button>
 
                 <div class="my-1.5 border-t border-slate-100"></div>
-                <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">Spreadsheet</div>
+                <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-600">Spreadsheet</div>
 
                 <button type="button" :disabled="!!loading"
                     @click="
@@ -107,8 +107,8 @@
         </div>
 
         <div class="flex items-center space-x-3 w-full sm:w-auto">
-            <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Status:</label>
-            <select wire:model.live="statusFilter"
+            <label for="status-filter" class="text-xs font-semibold text-slate-600 uppercase tracking-wider">Status:</label>
+            <select id="status-filter" aria-label="Filter status stok" wire:model.live="statusFilter"
                 class="px-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                 <option value="">Semua Status</option>
                 @foreach ($statuses as $status)
@@ -157,7 +157,7 @@
                             </div>
 
                             <!-- Adjust Quantity (+ / -) -->
-                            <div class="flex items-center space-x-2 flex-shrink-0">
+                            <div class="flex items-center space-x-2 shrink-0">
                                 <button type="button" wire:click="adjustQuantity({{ $stock->id }}, -1)" wire:loading.attr="disabled"
                                     class="w-8 h-8 inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 disabled:opacity-60 transition"
                                     title="Kurangi 1" aria-label="Kurangi jumlah {{ $stock->name }}">
@@ -176,7 +176,7 @@
                         </div>
 
                         <!-- Row Actions Menu -->
-                        <div class="relative flex-shrink-0" x-data="{ open: false, loading: null }" @click.outside="open = false" @keydown.escape.window="open = false">
+                        <div class="relative shrink-0" x-data="{ open: false, loading: null }" @click.outside="open = false" @keydown.escape.window="open = false">
                             <button type="button" @click="open = !open" :disabled="!!loading"
                                 class="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-transparent text-slate-500 hover:border-slate-200 hover:bg-white hover:text-slate-800 transition disabled:opacity-60"
                                 title="Tindakan">
@@ -197,7 +197,7 @@
                                 x-transition:leave-start="opacity-100 scale-100"
                                 x-transition:leave-end="opacity-0 scale-95"
                                 class="absolute right-0 z-20 mt-1.5 w-48 origin-top-right rounded-xl border border-slate-200 bg-white py-1.5 shadow-xl shadow-slate-200/70">
-                                <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">Tindakan</div>
+                                <div class="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-600">Tindakan</div>
 
                                 <a href="{{ route('stocks.show', $stock->id) }}" @click="open = false"
                                     class="flex w-full items-center gap-2.5 px-3 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50 transition">
@@ -268,9 +268,9 @@
             class="modal-scroll-lock fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overscroll-contain p-4 bg-slate-900/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl max-w-2xl w-full shadow-xl border border-slate-200 max-h-[90vh] overflow-hidden flex flex-col">
                 <div class="flex items-center justify-between px-6 py-4 bg-blue-600">
-                    <h3 class="text-lg font-bold text-white">
+                    <h2 class="text-lg font-bold text-white">
                         {{ $editingStockId ? 'Edit Stok' : 'Tambah Stok Baru' }}
-                    </h3>
+                    </h2>
                     <button type="button" @click="show = false; $wire.closeFormModal()" class="text-white/80 hover:text-white transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -288,7 +288,7 @@
                                     class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                     placeholder="Contoh: Kertas HVS A4 80gsm" required>
                                 @error('formName')
-                                    <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                    <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -298,7 +298,7 @@
                                     class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                                     placeholder="ATK-001">
                                 @error('formSku')
-                                    <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                    <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -306,7 +306,7 @@
                         <div>
                             <div class="flex items-center justify-between mb-1">
                                 <label class="block text-sm font-medium text-slate-700">Deskripsi (Toast UI Editor)</label>
-                                <span class="text-xs text-slate-400">Markdown & WYSIWYG</span>
+                                <span class="text-xs text-slate-600">Markdown & WYSIWYG</span>
                             </div>
 
                             <div wire:ignore
@@ -339,7 +339,7 @@
                                 <div x-ref="formEditorContainer"></div>
                             </div>
                             @error('formDescription')
-                                <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -349,7 +349,7 @@
                                 <input id="formQuantity" wire:model.live="formQuantity" type="number" min="0" step="1"
                                     class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white">
                                 @error('formQuantity')
-                                    <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                    <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -358,7 +358,7 @@
                                 <input id="formUnit" wire:model="formUnit" type="text"
                                     class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white" placeholder="pcs">
                                 @error('formUnit')
-                                    <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                    <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -367,7 +367,7 @@
                                 <input id="formPrice" wire:model="formPrice" type="number" min="0" step="0.01"
                                     class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white" placeholder="0">
                                 @error('formPrice')
-                                    <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                    <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -376,7 +376,7 @@
                                 <input id="formMinStock" wire:model.live="formMinStock" type="number" min="0" step="1"
                                     class="w-full px-3.5 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white">
                                 @error('formMinStock')
-                                    <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                    <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -421,7 +421,7 @@
             class="modal-scroll-lock fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overscroll-contain p-4 bg-slate-900/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl max-w-md w-full shadow-xl border border-slate-200 overflow-hidden flex flex-col">
                 <div class="flex items-center justify-between px-6 py-4 bg-emerald-600">
-                    <h3 class="text-lg font-bold text-white">Import Stok Barang dari File Excel</h3>
+                    <h2 class="text-lg font-bold text-white">Import Stok Barang dari File Excel</h2>
                     <button type="button" @click="show = false; $wire.closeImportModal()" class="text-white/80 hover:text-white transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -439,7 +439,7 @@
                                 class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
                                 required>
                             @error('importFile')
-                                <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -490,8 +490,8 @@
                             </svg>
                         </span>
                         <div>
-                            <h3 class="text-lg font-bold text-white">Generate Stok Barang Otomatis dengan AI</h3>
-                            <p class="text-xs text-purple-100">Minta AI membuatkan beberapa item inventaris terstruktur sesuai
+                            <h2 class="text-lg font-bold text-white">Generate Stok Barang Otomatis dengan AI</h2>
+                            <p class="text-xs text-white">Minta AI membuatkan beberapa item inventaris terstruktur sesuai
                                 kebutuhan Anda</p>
                         </div>
                     </div>
@@ -519,7 +519,7 @@
                                 class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
                                 placeholder="Contoh: Buatkan daftar perlengkapan alat tulis kantor untuk ruang administrasi..."></textarea>
                             @error('aiPrompt')
-                                <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -530,10 +530,10 @@
                                     <input wire:model="aiCount" type="number" min="1"
                                         class="w-20 px-2.5 py-1 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 font-medium text-center"
                                         placeholder="3">
-                                    <span class="text-xs text-slate-400">item</span>
+                                    <span class="text-xs text-slate-600">item</span>
                                 </div>
                                 @error('aiCount')
-                                    <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
+                                    <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span>
                                 @enderror
                             </div>
 
@@ -579,7 +579,7 @@
                                         <div class="flex-1 text-xs">
                                             <div class="flex items-center justify-between">
                                                 <span class="font-bold text-slate-900">{{ $item['name'] }}</span>
-                                                <span class="text-slate-400">
+                                                <span class="text-slate-600">
                                                     {{ $item['quantity'] }} {{ $item['unit'] }}
                                                     @if (!empty($item['sku']))
                                                         &bull; {{ $item['sku'] }}
@@ -633,13 +633,13 @@
             class="modal-scroll-lock fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overscroll-contain p-4 bg-slate-900/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden">
                 <div class="flex items-center space-x-3 px-6 py-4 bg-rose-600">
-                    <div class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center flex-shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-base font-bold text-white">Konfirmasi Hapus Stok</h3>
+                        <h2 class="text-base font-bold text-white">Konfirmasi Hapus Stok</h2>
                         <p class="text-xs text-rose-100">Tindakan ini tidak dapat dibatalkan</p>
                     </div>
                 </div>

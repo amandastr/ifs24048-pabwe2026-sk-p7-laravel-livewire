@@ -1,7 +1,7 @@
 <div class="max-w-md mx-auto my-8">
     <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
         <div class="text-center mb-6">
-            <h2 class="text-2xl font-bold text-slate-900">Buat Akun Member</h2>
+            <h1 class="text-2xl font-bold text-slate-900">Buat Akun Member</h1>
             <p class="text-sm text-slate-500 mt-1">Daftar sekarang untuk mulai mengelola stok barang Anda</p>
         </div>
 
@@ -9,25 +9,25 @@
             <div>
                 <label for="name" class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
                 <input wire:model="name" type="text" id="name" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition" placeholder="Nama Anda" required>
-                @error('name') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                @error('name') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <div>
                 <label for="username" class="block text-sm font-medium text-slate-700 mb-1">Username</label>
                 <input wire:model="username" type="text" id="username" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition" placeholder="username_kamu" required>
-                @error('username') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                @error('username') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <div>
                 <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
                 <input wire:model="email" type="email" id="email" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition" placeholder="nama@email.com" required>
-                @error('email') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                @error('email') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <div>
                 <label for="password" class="block text-sm font-medium text-slate-700 mb-1">Password</label>
                 <input wire:model="password" type="password" id="password" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition" placeholder="Minimal 8 karakter" required>
-                @error('password') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                @error('password') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <div>

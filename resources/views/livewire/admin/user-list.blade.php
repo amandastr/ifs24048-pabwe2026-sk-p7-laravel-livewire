@@ -34,7 +34,7 @@
                         <tr class="hover:bg-slate-50/80 transition">
                             <td class="py-4 px-6">
                                 <div class="font-semibold text-slate-900">{{ $user->name }}</div>
-                                <div class="text-xs text-slate-400 font-mono">&#64;{{ $user->username }}</div>
+                                <div class="text-xs text-slate-600 font-mono">&#64;{{ $user->username }}</div>
                             </td>
                             <td class="py-4 px-6 text-slate-600">
                                 {{ $user->email }}

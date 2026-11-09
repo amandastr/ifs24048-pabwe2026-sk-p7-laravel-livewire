@@ -52,7 +52,7 @@
             </div>
 
             <!-- Delete Button -->
-            <button wire:click="confirmDeleteStock" wire:loading.attr="disabled" class="inline-flex items-center space-x-1 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-xs font-semibold rounded-lg transition disabled:opacity-75">
+            <button wire:click="confirmDeleteStock" wire:loading.attr="disabled" class="inline-flex items-center space-x-1 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold rounded-lg transition disabled:opacity-75">
                 <svg wire:loading.remove wire:target="confirmDeleteStock" class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
@@ -95,8 +95,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                 </div>
-                <h3 class="text-sm font-bold text-slate-800">Tambahkan Cover Gambar untuk Stok Ini</h3>
-                <p class="text-xs text-slate-400 mt-1 max-w-sm">Mendukung format gambar PNG, JPG, GIF hingga ukuran 5MB untuk visualisasi barang.</p>
+                <h2 class="text-sm font-bold text-slate-800">Tambahkan Cover Gambar untuk Stok Ini</h2>
+                <p class="text-xs text-slate-600 mt-1 max-w-sm">Mendukung format gambar PNG, JPG, GIF hingga ukuran 5MB untuk visualisasi barang.</p>
                 
                 <button type="button" onclick="document.getElementById('coverPhotoInput').click()" class="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm transition flex items-center space-x-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -109,7 +109,7 @@
             Sedang mengunggah dan memproses gambar cover...
         </div>
         @error('coverPhoto')
-            <div class="p-3 bg-rose-50 border-t border-rose-100 text-center text-xs text-rose-600 font-medium">
+            <div class="p-3 bg-rose-50 border-t border-rose-100 text-center text-xs text-rose-700 font-medium">
                 {{ $message }}
             </div>
         @enderror
@@ -120,34 +120,34 @@
         <!-- Metadata Overview Cards -->
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Status Stok</span>
+                <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Status Stok</span>
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border {{ $currentStatus->badgeClass() }}">
                     {{ $currentStatus->label() }}
                 </span>
             </div>
 
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">SKU</span>
+                <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">SKU</span>
                 <div class="text-sm font-semibold text-slate-800 font-mono">{{ $stock->sku ?? '-' }}</div>
             </div>
 
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Jumlah &amp; Min. Stok</span>
+                <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Jumlah &amp; Min. Stok</span>
                 <div class="text-sm font-semibold text-slate-800">
                     {{ number_format($stock->quantity, 0, ',', '.') }} {{ $stock->unit }}
-                    <span class="text-xs font-medium text-slate-400">/ min {{ $stock->min_stock }}</span>
+                    <span class="text-xs font-medium text-slate-600">/ min {{ $stock->min_stock }}</span>
                 </div>
             </div>
 
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Harga</span>
+                <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Harga</span>
                 <div class="text-sm font-semibold text-slate-800">
                     {{ $stock->price !== null ? 'Rp '.number_format((float) $stock->price, 0, ',', '.') : 'Belum diatur' }}
                 </div>
             </div>
 
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Terakhir Diperbarui</span>
+                <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider block mb-1">Terakhir Diperbarui</span>
                 <div class="text-sm font-semibold text-slate-800">
                     {{ $stock->updated_at ? $stock->updated_at->format('d M Y H:i') : '-' }}
                 </div>
@@ -185,10 +185,10 @@
                     <div x-ref="viewerContainer"></div>
                 </div>
             @else
-                <div class="py-12 text-center text-slate-400">
+                <div class="py-12 text-center text-slate-600">
                     <svg class="w-10 h-10 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                     <p class="text-sm font-medium text-slate-600">Belum ada deskripsi untuk stok ini</p>
-                    <p class="text-xs text-slate-400 mt-1">Tambahkan spesifikasi, lokasi penyimpanan, atau catatan lain dengan Toast UI Editor.</p>
+                    <p class="text-xs text-slate-600 mt-1">Tambahkan spesifikasi, lokasi penyimpanan, atau catatan lain dengan Toast UI Editor.</p>
                     <button wire:click="openEditModal" class="mt-4 px-3.5 py-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition">
                         + Tambahkan Deskripsi Sekarang
                     </button>
@@ -222,13 +222,13 @@
                             <div class="sm:col-span-2">
                                 <label for="detailName" class="block text-sm font-semibold text-slate-800 mb-1">Nama Barang</label>
                                 <input id="detailName" wire:model="name" type="text" class="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" placeholder="Masukkan nama barang..." required>
-                                @error('name') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                                @error('name') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label for="detailSku" class="block text-sm font-semibold text-slate-800 mb-1">SKU</label>
                                 <input id="detailSku" wire:model="sku" type="text" class="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" placeholder="ATK-001">
-                                @error('sku') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                                @error('sku') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                             </div>
                         </div>
 
@@ -237,25 +237,25 @@
                             <div>
                                 <label for="detailQuantity" class="block text-sm font-semibold text-slate-800 mb-1">Quantity</label>
                                 <input id="detailQuantity" wire:model.live="quantity" type="number" min="0" step="1" class="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                                @error('quantity') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                                @error('quantity') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label for="detailUnit" class="block text-sm font-semibold text-slate-800 mb-1">Unit</label>
                                 <input id="detailUnit" wire:model="unit" type="text" class="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" placeholder="pcs">
-                                @error('unit') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                                @error('unit') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label for="detailPrice" class="block text-sm font-semibold text-slate-800 mb-1">Harga (Rp)</label>
                                 <input id="detailPrice" wire:model="price" type="number" min="0" step="0.01" class="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" placeholder="0">
-                                @error('price') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                                @error('price') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
                             <div>
                                 <label for="detailMinStock" class="block text-sm font-semibold text-slate-800 mb-1">Min. Stok</label>
                                 <input id="detailMinStock" wire:model.live="minStock" type="number" min="0" step="1" class="w-full px-3.5 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                                @error('minStock') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                                @error('minStock') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                             </div>
                         </div>
 
@@ -271,7 +271,7 @@
                         <div>
                             <div class="flex items-center justify-between mb-1">
                                 <label class="block text-sm font-semibold text-slate-800">Deskripsi Barang (Toast UI Editor)</label>
-                                <span class="text-xs text-slate-400">Markdown & WYSIWYG</span>
+                                <span class="text-xs text-slate-600">Markdown & WYSIWYG</span>
                             </div>
 
                             <div wire:ignore
@@ -303,7 +303,7 @@
                                  class="rounded-xl border border-slate-300 overflow-hidden bg-white">
                                 <div x-ref="detailEditorContainer"></div>
                             </div>
-                            @error('description') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
+                            @error('description') <span class="text-xs text-rose-700 mt-1 block">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
@@ -335,7 +335,7 @@
             class="modal-scroll-lock fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overscroll-contain p-4 bg-slate-900/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden">
                 <div class="flex items-center space-x-3 px-6 py-4 bg-rose-600">
-                    <div class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center flex-shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
@@ -378,7 +378,7 @@
             class="modal-scroll-lock fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overscroll-contain p-4 bg-slate-900/50 backdrop-blur-sm">
             <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden">
                 <div class="flex items-center space-x-3 px-6 py-4 bg-rose-600">
-                    <div class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center flex-shrink-0">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
