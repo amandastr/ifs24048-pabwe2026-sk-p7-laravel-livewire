@@ -52,9 +52,10 @@ ENV PORT=80 \
     APP_DEBUG=false \
     LOG_CHANNEL=stderr \
     FORCE_HTTPS=true \
-    SESSION_DRIVER=database \
-    CACHE_STORE=database \
-    QUEUE_CONNECTION=sync
+    SESSION_DRIVER=cookie \
+    CACHE_STORE=array \
+    QUEUE_CONNECTION=sync \
+    MYSQL_ATTR_SSL_CA=/app/docker/aiven-ca.pem
 
 USER www-data
 

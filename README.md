@@ -92,3 +92,17 @@ File yang dipakai: `vercel.json`, `Dockerfile.vercel`, `Caddyfile`, `.dockerigno
 2. Di Project Settings Vercel: Framework Preset = **Other**, kosongkan Build/Install/Output Command override.
 3. Isi Environment Variables: `APP_KEY` (dari `php artisan key:generate --show`), `APP_URL`, `DB_CONNECTION=mysql`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `MYSQL_ATTR_SSL_CA` (jika penyedia database mewajibkan TLS), `FORCE_HTTPS=true`, `SESSION_DRIVER=database`, `CACHE_STORE=database`, `QUEUE_CONNECTION=sync`, dan `OPENAI_KEY` (opsional).
 4. Redeploy. Catatan: sistem berkas container tidak permanen, sehingga foto profil dan cover yang diunggah tidak tersimpan permanen kecuali disk `public` dialihkan ke object storage.
+
+## Deploy ke Vercel (FrankenPHP) + Aiven MySQL
+
+1. Taruh `docker/aiven-ca.pem` (lihat `docker/README.md`) dan commit.
+2. Dari lokal, jalankan migrasi + seeder ke Aiven (sekali):
+   `DB_HOST=... DB_PORT=... DB_DATABASE=... DB_USERNAME=... DB_PASSWORD=... MYSQL_ATTR_SSL_CA=docker/aiven-ca.pem php artisan migrate --force && php artisan db:seed --force`
+3. Environment Variables di Vercel: `APP_KEY` (`php artisan key:generate --show`), `APP_ENV=production`, `APP_DEBUG=false`,
+   `APP_URL`, `FORCE_HTTPS=true`, `DB_CONNECTION=mysql`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`,
+   `MYSQL_ATTR_SSL_CA=/app/docker/aiven-ca.pem`, `SESSION_DRIVER=cookie`, `CACHE_STORE=array`, `LOG_CHANNEL=stderr`,
+   serta `OPENAI_KEY` / `OPENAI_ENDPOINT` / `OPENAI_MODEL` bila memakai AI.
+4. Settings -> Domains, sesuaikan `APP_URL`, lalu **Redeploy** (perubahan env baru berlaku setelah redeploy).
+5. Cek `/up` lalu `/login`.
+
+Catatan: filesystem container tidak permanen, jadi cover stok dan foto profil hasil upload tidak tahan lama di Vercel.
